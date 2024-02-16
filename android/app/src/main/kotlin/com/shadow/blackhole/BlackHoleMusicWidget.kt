@@ -1,4 +1,4 @@
-package com.shadow.blackhole
+package com.appware.cloudSpot
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider

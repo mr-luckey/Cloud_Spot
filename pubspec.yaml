@@ -11,6 +11,7 @@ environment:
   flutter: ">=3.3.0"
 
 dependencies:
+  admob_flutter: ^3.0.0
   app_links: ^3.5.0
   audio_service: ^0.18.12
   audiotagger:
@@ -38,7 +39,11 @@ dependencies:
     git:
       url: https://github.com/Sangwan5688/flutter_lyric
       ref: 8cea262
+  get: ^4.6.6
   get_it: ^7.6.7
+  # google_mobile_ads: ^4.0.0
+
+  google_mobile_ads: ^4.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   # home_widget: ^0.3.0
@@ -68,7 +73,6 @@ dependencies:
   uuid: ^3.0.7
   # workmanager: ^0.5.1
   youtube_explode_dart: ^2.1.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -86,9 +90,9 @@ flutter:
     - assets/
 
 msix_config:
-  display_name: BlackHole
-  publisher_display_name: Ankit Sangwan
-  identity_name: com.shadow.blackhole
+  display_name: CloudSpot
+  publisher_display_name: AppWare Technologies
+  identity_name: com.appware.cloudSpot
   icons_background_color: transparent
   logo_path: assets/ic_launcher.png
   file_extension: .mp3, .m4a

@@ -1,25 +1,7 @@
-/*
- *  This file is part of BlackHole (https://github.com/Sangwan5688/BlackHole).
- * 
- * BlackHole is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * BlackHole is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with BlackHole.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * Copyright (c) 2021-2023, Ankit Sangwan
- */
-
 import 'dart:async';
 import 'dart:io';
-
+// import 'package:admob_flutter/admob_flutter.dart';
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:blackhole/Helpers/config.dart';
 import 'package:blackhole/Helpers/handle_native.dart';
 import 'package:blackhole/Helpers/import_export_playlist.dart';
@@ -37,8 +19,8 @@ import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-// import 'package:home_widget/home_widget.dart';
 import 'package:logging/logging.dart';
 import 'package:metadata_god/metadata_god.dart';
 import 'package:path_provider/path_provider.dart';
@@ -47,6 +29,10 @@ import 'package:sizer/sizer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await MobileAds.instance.initialize();
+  /// `Admob.initialize();` is initializing the AdMob plugin in the Flutter application. This method
+  /// needs to be called before using any AdMob functionality, such as loading and displaying ads.
+  Admob.initialize();
   // Paint.enableDithering = true; No longer needed
 
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
@@ -66,27 +52,13 @@ Future<void> main() async {
     setOptimalDisplayMode();
   }
   await startService();
+
+// Admob.initialize();
   runApp(MyApp());
 }
 
 Future<void> setOptimalDisplayMode() async {
   await FlutterDisplayMode.setHighRefreshRate();
-  // final List<DisplayMode> supported = await FlutterDisplayMode.supported;
-  // final DisplayMode active = await FlutterDisplayMode.active;
-
-  // final List<DisplayMode> sameResolution = supported
-  //     .where(
-  //       (DisplayMode m) => m.width == active.width && m.height == active.height,
-  //     )
-  //     .toList()
-  //   ..sort(
-  //     (DisplayMode a, DisplayMode b) => b.refreshRate.compareTo(a.refreshRate),
-  //   );
-
-  // final DisplayMode mostOptimalMode =
-  //     sameResolution.isNotEmpty ? sameResolution.first : active;
-
-  // await FlutterDisplayMode.setPreferredMode(mostOptimalMode);
 }
 
 Future<void> startService() async {
@@ -121,33 +93,6 @@ Future<void> openHiveBox(String boxName, {bool limit = false}) async {
   }
 }
 
-/// Called when Doing Background Work initiated from Widget
-// @pragma('vm:entry-point')
-// Future<void> backgroundCallback(Uri? data) async {
-//   if (data?.host == 'controls') {
-//     final audioHandler = await AudioHandlerHelper().getAudioHandler();
-//     if (data?.path == '/play') {
-//       audioHandler.play();
-//     } else if (data?.path == '/pause') {
-//       audioHandler.pause();
-//     } else if (data?.path == '/skipNext') {
-//       audioHandler.skipToNext();
-//     } else if (data?.path == '/skipPrevious') {
-//       audioHandler.skipToPrevious();
-//     }
-
-//     // await HomeWidget.saveWidgetData<String>(
-//     //   'title',
-//     //   audioHandler?.mediaItem.value?.title,
-//     // );
-//     // await HomeWidget.saveWidgetData<String>(
-//     //   'subtitle',
-//     //   audioHandler?.mediaItem.value?.displaySubtitle,
-//     // );
-//     // await HomeWidget.updateWidget(name: 'BlackHoleMusicWidget');
-//   }
-// }
-
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -171,8 +116,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    // HomeWidget.setAppGroupId('com.shadow.blackhole');
-    // HomeWidget.registerBackgroundCallback(backgroundCallback);
+
     final String systemLangCode = Platform.localeName.substring(0, 2);
     final String? lang = Hive.box('settings').get('lang') as String?;
     if (lang == null &&
@@ -299,8 +243,8 @@ class _MyAppState extends State<MyApp> {
             builder: (context, orientation) {
               SizerUtil.setScreenSize(constraints, orientation);
               return MaterialApp(
-                title: 'BlackHole',
-                restorationScopeId: 'blackhole',
+                title: 'Cloud Spot',
+                restorationScopeId: 'Cloud Spot',
                 debugShowCheckedModeBanner: false,
                 themeMode: AppTheme.themeMode,
                 theme: AppTheme.lightTheme(

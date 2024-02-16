@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.shadow.blackhole">
+    package="com.appware.cloudSpot">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -13,13 +13,16 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="BlackHole"
+        android:label="CloudSpot"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
         
         <meta-data
             android:name="com.google.android.gms.car.application"
             android:resource="@xml/automotive_app_desc" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
         
         <receiver
             android:name=".BlackHoleMusicWidget"

@@ -1,22 +1,3 @@
-/*
- *  This file is part of BlackHole (https://github.com/Sangwan5688/BlackHole).
- * 
- * BlackHole is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * BlackHole is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with BlackHole.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * Copyright (c) 2021-2023, Ankit Sangwan
- */
-
 import 'dart:io';
 
 import 'package:audiotagger/audiotagger.dart';
@@ -443,46 +424,6 @@ class Download with ChangeNotifier {
           Logger.root.severe('Error fetching lyrics: $e');
           lyrics = '';
         }
-        // commented out not to use FFmpeg as it increases the size of the app
-        // can uncomment this if you want to use FFmpeg to convert the audio format
-        // to any desired codec instead of the default m4a one.
-
-        // final List<String> availableFormats = ['m4a'];
-        // if (downloadFormat != 'm4a' &&
-        //     availableFormats.contains(downloadFormat)) {
-        //   List<String>? argsList;
-        //   if (downloadFormat == 'mp3') {
-        //     argsList = [
-        //       '-y',
-        //       '-i',
-        //       '$filepath',
-        //       '-c:a',
-        //       'libmp3lame',
-        //       '-b:a',
-        //       '320k',
-        //       filepath!.replaceAll('.m4a', '.mp3'),
-        //     ];
-        //   }
-        //   if (downloadFormat == 'm4a') {
-        //     argsList = [
-        //       '-y',
-        //       '-i',
-        //       filepath!,
-        //       '-c:a',
-        //       'aac',
-        //       '-b:a',
-        //       '320k',
-        //       filepath!.replaceAll('.m4a', '.m4a'),
-        //     ];
-        //   }
-        //   if (argsList != null) {
-        //     Logger.root.info('Converting audio to $downloadFormat');
-        //     await FFmpegKit.executeWithArguments(argsList);
-        //     Logger.root.info('Conversion complete, deleting old file');
-        //     await File(filepath!).delete();
-        //     filepath = filepath!.replaceAll('.m4a', '.$downloadFormat');
-        //   }
-        // }
         Logger.root.info('Getting audio tags');
         if (Platform.isAndroid) {
           try {
@@ -497,7 +438,7 @@ class Download with ChangeNotifier {
               genre: data['language'].toString(),
               year: data['year'].toString(),
               lyrics: lyrics,
-              comment: 'BlackHole',
+              comment: 'Cloud Spot',
             );
             Logger.root.info('Started tag editing');
             final tagger = Audiotagger();
@@ -505,11 +446,6 @@ class Download with ChangeNotifier {
               path: filepath!,
               tag: tag,
             );
-            // await Future.delayed(const Duration(seconds: 1), () async {
-            //   if (await file2.exists()) {
-            //     await file2.delete();
-            //   }
-            // });
           } catch (e) {
             Logger.root.severe('Error editing tags: $e');
           }
@@ -531,12 +467,6 @@ class Download with ChangeNotifier {
                 year: ['', 'null'].contains(data['year'].toString())
                     ? null
                     : int.parse(data['year'].toString()),
-                // lyrics: lyrics,
-                // comment: 'BlackHole',
-                // trackNumber: 1,
-                // trackTotal: 12,
-                // discNumber: 1,
-                // discTotal: 5,
                 durationMs: int.parse(data['duration'].toString()) * 1000,
                 fileSize: file.lengthSync(),
                 picture: Picture(
@@ -579,10 +509,6 @@ class Download with ChangeNotifier {
         Hive.box('downloads').put(songData['id'].toString(), songData);
 
         Logger.root.info('Everything Done!');
-        // ShowSnackBar().showSnackBar(
-        //   context,
-        //   '"${data['title']}" ${AppLocalizations.of(context)!.downed}',
-        // );
       } else {
         download = true;
         progress = 0.0;

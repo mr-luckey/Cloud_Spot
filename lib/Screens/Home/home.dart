@@ -1,21 +1,4 @@
-/*
- *  This file is part of BlackHole (https://github.com/Sangwan5688/BlackHole).
- * 
- * BlackHole is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * BlackHole is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with BlackHole.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * Copyright (c) 2021-2023, Ankit Sangwan
- */
+// Coded by Naseer Ahmed
 
 import 'dart:io';
 
@@ -47,7 +30,7 @@ import 'package:logging/logging.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -129,7 +112,6 @@ class _HomePageState extends State<HomePage> {
                 textColor: Theme.of(context).colorScheme.secondary,
                 label: AppLocalizations.of(context)!.update,
                 onPressed: () async {
-                  String arch = '';
                   if (Platform.isAndroid) {
                     List? abis = await Hive.box('settings').get('supportedAbis')
                         as List?;
@@ -142,18 +124,15 @@ class _HomePageState extends State<HomePage> {
                       await Hive.box('settings').put('supportedAbis', abis);
                     }
                     if (abis.contains('arm64')) {
-                      arch = 'arm64';
-                    } else if (abis.contains('armeabi')) {
-                      arch = 'armeabi';
-                    }
+                    } else if (abis.contains('armeabi')) {}
                   }
                   Navigator.pop(context);
-                  launchUrl(
-                    Uri.parse(
-                      'https://sangwan5688.github.io/download?platform=${Platform.operatingSystem}&arch=$arch',
-                    ),
-                    mode: LaunchMode.externalApplication,
-                  );
+                  // launchUrl(
+                  //   Uri.parse(
+                  //     'https://sangwan5688.github.io/download?platform=${Platform.operatingSystem}&arch=$arch',
+                  //   ),
+                  //   mode: LaunchMode.externalApplication,
+                  // );
                 },
               ),
             );
@@ -205,7 +184,7 @@ class _HomePageState extends State<HomePage> {
         ) as String;
         if (autoBackPath == '') {
           ExtStorageProvider.getExtStorage(
-            dirName: 'BlackHole/Backups',
+            dirName: 'CloudSpot/Backups',
             writeAccess: true,
           ).then((value) {
             Hive.box('settings').put('autoBackPath', value);
@@ -214,7 +193,7 @@ class _HomePageState extends State<HomePage> {
               checked,
               boxNames,
               path: value,
-              fileName: 'BlackHole_AutoBackup',
+              fileName: 'CloudSpot_AutoBackup',
               showDialog: false,
             );
           });
@@ -224,14 +203,14 @@ class _HomePageState extends State<HomePage> {
             checked,
             boxNames,
             path: autoBackPath,
-            fileName: 'BlackHole_AutoBackup',
+            fileName: 'CloudSpot_AutoBackup',
             showDialog: false,
           ).then(
             (value) => {
               if (value.contains('No such file or directory'))
                 {
                   ExtStorageProvider.getExtStorage(
-                    dirName: 'BlackHole/Backups',
+                    dirName: 'CloudSpot/Backups',
                     writeAccess: true,
                   ).then(
                     (value) {
@@ -241,7 +220,7 @@ class _HomePageState extends State<HomePage> {
                         checked,
                         boxNames,
                         path: value,
-                        fileName: 'BlackHole_AutoBackup',
+                        fileName: 'CloudSpot_AutoBackup',
                       );
                     },
                   ),
@@ -301,7 +280,7 @@ class _HomePageState extends State<HomePage> {
                   flexibleSpace: FlexibleSpaceBar(
                     title: RichText(
                       text: TextSpan(
-                        text: AppLocalizations.of(context)!.appTitle,
+                        // text: AppLocalizations.of(context)!.appTitle,
                         style: const TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.w600,
@@ -468,21 +447,21 @@ class _HomePageState extends State<HomePage> {
                                   }
                                 },
                               ),
-                              ListTile(
-                                title:
-                                    Text(AppLocalizations.of(context)!.about),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0,
-                                ),
-                                leading: Icon(
-                                  Icons.info_outline_rounded,
-                                  color: Theme.of(context).iconTheme.color,
-                                ),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  Navigator.pushNamed(context, '/about');
-                                },
-                              ),
+                              // ListTile(
+                              //   title:
+                              //       Text(AppLocalizations.of(context)!.about),
+                              //   contentPadding: const EdgeInsets.symmetric(
+                              //     horizontal: 20.0,
+                              //   ),
+                              //   leading: Icon(
+                              //     Icons.info_outline_rounded,
+                              //     color: Theme.of(context).iconTheme.color,
+                              //   ),
+                              //   onTap: () {
+                              //     Navigator.pop(context);
+                              //     Navigator.pushNamed(context, '/about');
+                              //   },
+                              // ),
                             ],
                           );
                         },
@@ -499,12 +478,12 @@ class _HomePageState extends State<HomePage> {
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(5, 30, 5, 20),
                           child: Center(
-                            child: Text(
-                              AppLocalizations.of(context)!.madeBy,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                          ),
+                              // child: Text(
+                              //   AppLocalizations.of(context)!.madeBy,
+                              //   textAlign: TextAlign.center,
+                              //   style: const TextStyle(fontSize: 12),
+                              // ),
+                              ),
                         ),
                       ),
                     ],

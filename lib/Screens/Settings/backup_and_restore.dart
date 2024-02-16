@@ -1,21 +1,4 @@
-/*
- *  This file is part of BlackHole (https://github.com/Sangwan5688/BlackHole).
- * 
- * BlackHole is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * BlackHole is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with BlackHole.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * Copyright (c) 2021-2023, Ankit Sangwan
- */
+// Coded by Naseer Ahmed
 
 import 'package:blackhole/CustomWidgets/box_switch_tile.dart';
 import 'package:blackhole/CustomWidgets/gradient_containers.dart';
@@ -41,7 +24,7 @@ class _BackupAndRestorePageState extends State<BackupAndRestorePage> {
   final MyTheme currentTheme = GetIt.I<MyTheme>();
   String autoBackPath = Hive.box('settings').get(
     'autoBackPath',
-    defaultValue: '/storage/emulated/0/BlackHole/Backups',
+    defaultValue: '/storage/emulated/0/CloudSpot/Backups',
   ) as String;
 
   @override
@@ -330,10 +313,10 @@ class _BackupAndRestorePageState extends State<BackupAndRestorePage> {
                 ),
                 onPressed: () async {
                   autoBackPath = await ExtStorageProvider.getExtStorage(
-                        dirName: 'BlackHole/Backups',
+                        dirName: 'CloudSpot/Backups',
                         writeAccess: true,
                       ) ??
-                      '/storage/emulated/0/BlackHole/Backups';
+                      '/storage/emulated/0/CloudSpot/Backups';
                   Hive.box('settings').put('autoBackPath', autoBackPath);
                   setState(
                     () {},

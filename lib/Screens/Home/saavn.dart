@@ -1,24 +1,8 @@
-/*
- *  This file is part of BlackHole (https://github.com/Sangwan5688/BlackHole).
- * 
- * BlackHole is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * BlackHole is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with BlackHole.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * Copyright (c) 2021-2023, Ankit Sangwan
- */
+// Coded by Naseer Ahmed
 
 import 'dart:io';
 
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:blackhole/APIs/api.dart';
 import 'package:blackhole/CustomWidgets/collage.dart';
 import 'package:blackhole/CustomWidgets/horizontal_albumlist.dart';
@@ -28,6 +12,7 @@ import 'package:blackhole/CustomWidgets/like_button.dart';
 import 'package:blackhole/CustomWidgets/on_hover.dart';
 import 'package:blackhole/CustomWidgets/snackbar.dart';
 import 'package:blackhole/CustomWidgets/song_tile_trailing_menu.dart';
+import 'package:blackhole/G-Ads.dart/banner-ads.dart';
 import 'package:blackhole/Helpers/extensions.dart';
 import 'package:blackhole/Helpers/format.dart';
 import 'package:blackhole/Models/image_quality.dart';
@@ -37,6 +22,8 @@ import 'package:blackhole/Screens/Search/artists.dart';
 import 'package:blackhole/Services/player_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 bool fetched = false;
@@ -54,6 +41,13 @@ class SaavnHomePage extends StatefulWidget {
 
 class _SaavnHomePageState extends State<SaavnHomePage>
     with AutomaticKeepAliveClientMixin<SaavnHomePage> {
+  final AdController adController = Get.put(AdController());
+
+  // final BannerAdController bannerAdController = Get.put(BannerAdController(
+  //   Platform.isAndroid
+  //       ? 'ca-app-pub-3940256099942544/6300978111'
+  //       : 'ca-app-pub-3940256099942544/6300978111',
+  // ));
   List recentList =
       Hive.box('cache').get('recentSongs', defaultValue: []) as List;
   Map likedArtists =
@@ -192,6 +186,29 @@ class _SaavnHomePageState extends State<SaavnHomePage>
                           );
                         },
                       ),
+                      // GetBuilder<BannerAdController>(
+                      //   builder: (controller) {
+                      //     if (controller.isLoaded! &&
+                      //         controller.bannerAd != null) {
+                      //       return Container(
+                      //         alignment: Alignment.bottomCenter,
+                      //         child: SafeArea(
+                      //           child: SizedBox(
+                      //             width: controller.bannerAd!.size.width
+                      //                 .toDouble(),
+                      //             height: controller.bannerAd!.size.height
+                      //                 .toDouble(),
+                      //             child: AdWidget(ad: controller.bannerAd!),
+                      //           ),
+                      //         ),
+                      //       );
+                      //     } else {
+                      //       // Return a placeholder widget or loading indicator
+                      //       return CircularProgressIndicator();
+                      //     }
+                      //   },
+                      // ),
+                      //TODO: banner ads implementation
                     ],
                   ),
                   builder: (BuildContext context, Box box, Widget? child) {
@@ -210,6 +227,7 @@ class _SaavnHomePageState extends State<SaavnHomePage>
                   valueListenable: Hive.box('settings').listenable(),
                   child: Column(
                     children: [
+                      //TODO: banner ads implementation...
                       GestureDetector(
                         child: Row(
                           children: [
@@ -231,6 +249,7 @@ class _SaavnHomePageState extends State<SaavnHomePage>
                           Navigator.pushNamed(context, '/playlists');
                         },
                       ),
+
                       SizedBox(
                         height: boxSize + 15,
                         child: ListView.builder(
@@ -298,6 +317,7 @@ class _SaavnHomePageState extends State<SaavnHomePage>
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
+                                                // Text("test data "),
                                                 Text(
                                                   showName,
                                                   textAlign: TextAlign.center,
@@ -354,6 +374,19 @@ class _SaavnHomePageState extends State<SaavnHomePage>
                           },
                         ),
                       ),
+                      GetBuilder<AdController>(
+                        builder: (_) {
+                          return AdmobBanner(
+                            adUnitId: adController.getBannerAdUnitId()!,
+                            adSize: _.bannerSize!,
+                            listener: (AdmobAdEvent event,
+                                Map<String, dynamic>? args) {
+                              _.handleEvent(event, args, 'Banner');
+                            },
+                          );
+                        },
+                      ),
+                      //TODO: banner ads implementation
                     ],
                   ),
                   builder: (BuildContext context, Box box, Widget? child) {
@@ -905,6 +938,8 @@ class _SaavnHomePageState extends State<SaavnHomePage>
                             },
                           ),
                         ),
+
+                        ///TODO: banner implementation
                       ],
                     );
             },
