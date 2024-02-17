@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 // import 'package:admob_flutter/admob_flutter.dart';
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:blackhole/Helpers/config.dart';
 import 'package:blackhole/Helpers/handle_native.dart';
 import 'package:blackhole/Helpers/import_export_playlist.dart';
@@ -32,7 +32,7 @@ Future<void> main() async {
   // await MobileAds.instance.initialize();
   /// `Admob.initialize();` is initializing the AdMob plugin in the Flutter application. This method
   /// needs to be called before using any AdMob functionality, such as loading and displaying ads.
-  Admob.initialize();
+  // Admob.initialize();
   // Paint.enableDithering = true; No longer needed
 
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {

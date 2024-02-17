@@ -42,8 +42,8 @@ android {
     defaultConfig {
         applicationId "com.appware.cloudSpot"
         minSdkVersion flutter.minSdkVersion
-        targetSdkVersion 29
-        // multiDexEnabled true
+        targetSdkVersion 30
+        multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -53,7 +53,7 @@ android {
            // Signing with the debug keys for now,
            // so `flutter run --release` works.
            signingConfig signingConfigs.debug
-        //    shrinkResources false
+            shrinkResources false
        }
    }
 
@@ -94,9 +94,9 @@ flutter {
 
 dependencies {
     // implementation 'com.android.tools.build:gradle:3.4.2'
-    implementation 'com.google.android.gms:play-services-measurement-api:17.2.2' 
+    implementation 'com.google.android.gms:play-services-measurement-api:21.5.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation'com.google.android.gms:play-services-measurement:20.1.2' 
+    implementation'com.google.android.gms:play-services-measurement:21.5.1'
 //     {
 //     exclude group: 'com.google.android.gms', module: 'play-services-measurement-base'
 // }

@@ -2,7 +2,7 @@
 
 import 'dart:io';
 
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:blackhole/APIs/api.dart';
 import 'package:blackhole/CustomWidgets/collage.dart';
 import 'package:blackhole/CustomWidgets/horizontal_albumlist.dart';
@@ -41,7 +41,7 @@ class SaavnHomePage extends StatefulWidget {
 
 class _SaavnHomePageState extends State<SaavnHomePage>
     with AutomaticKeepAliveClientMixin<SaavnHomePage> {
-  final AdController adController = Get.put(AdController());
+  // final AdController adController = Get.put(AdController());
 
   // final BannerAdController bannerAdController = Get.put(BannerAdController(
   //   Platform.isAndroid
@@ -374,18 +374,18 @@ class _SaavnHomePageState extends State<SaavnHomePage>
                           },
                         ),
                       ),
-                      GetBuilder<AdController>(
-                        builder: (_) {
-                          return AdmobBanner(
-                            adUnitId: adController.getBannerAdUnitId()!,
-                            adSize: _.bannerSize!,
-                            listener: (AdmobAdEvent event,
-                                Map<String, dynamic>? args) {
-                              _.handleEvent(event, args, 'Banner');
-                            },
-                          );
-                        },
-                      ),
+                      // GetBuilder<AdController>(
+                      //   builder: (_) {
+                      //     return AdmobBanner(
+                      //       adUnitId: adController.getBannerAdUnitId()!,
+                      //       adSize: _.bannerSize!,
+                      //       listener: (AdmobAdEvent event,
+                      //           Map<String, dynamic>? args) {
+                      //         _.handleEvent(event, args, 'Banner');
+                      //       },
+                      //     );
+                      //   },
+                      // ),
                       //TODO: banner ads implementation
                     ],
                   ),
